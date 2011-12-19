@@ -1,0 +1,181 @@
+%\documentclass[12pt,a4paper,twoside,draft,openright]{report}
+\documentclass[12pt,a4paper,oneside,draft]{report}
+
+% Palatino
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+
+% 한글 설정 시작
+\usepackage[hangul,nonfrench,finemath]{kotex}
+\usepackage[default]{dhucs-interword}
+\usehangulfontspec{ut}
+\usepackage[hangul]{dhucs-setspace}
+\usepackage{dhucs-gremph}
+
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage[unicode,pdftex,colorlinks]{hyperref}
+  \input glyphtounicode\pdfgentounicode=1
+\else
+  \usepackage[unicode,dvipdfm,colorlinks]{hyperref}
+\fi
+% 한글 설정 끝
+
+% Line spacing
+\usepackage{setspace}
+%\doublespacing
+\onehalfspacing
+
+% Header
+\pagestyle{headings}
+
+% Bibliography
+\usepackage[autostyle=true]{csquotes}
+\usepackage[backend=biber,style=ieee,natbib=true,hyperref=true]{biblatex}
+\addbibresource{wjkoh-bs-thesis.bib}
+\newcommand{\Kim}{\cite{Kim:2009:SMM:1531326.1531385}} 
+\newcommand{\KimKwon}{\cite{Kim:2009:SMM:1531326.1531385,Kwon:2008:GME:1360612.1360679}}
+\newcommand{\Igarashi}{\cite{Igarashi:2005:ASM:1073204.1073323}} 
+\newcommand{\Floater}{\cite{Floater200319}} 
+\newcommand{\Hormann}{\cite{Hormann:2006:MVC:1183287.1183295}}
+\newcommand{\Lipman}{\cite{Lipman:2008:GC:1360612.1360677}}
+
+% Math
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{array}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
+\newcommand{\thesistitle}{케이지 기반의 대규모 운동 경로 편집법\\ (Cage-based Large-scale Motion Path Editing)}
+
+\title{\thesistitle{}}
+\author{고우종\\
+서울대학교 컴퓨터공학부\\
+\url{wjngkoh@gmail.com}
+}
+\date{\today}
+%\keywords{Computer Graphics, Computer Animation,  Data-Driven Animation, Human Motion}
+
+\begin{document}
+% First cover
+\begin{titlepage}
+\begin{center}
+% Upper part of the page
+{\LARGE \thesistitle{}}\\[4.0cm]
+
+% Supervisor
+{\Large 지도교수 : 이제희}\\[1.5cm]
+
+{\Large 이 논문을 공학학사 학위 논문으로 제출함.}\\[2.5cm]
+
+% Bottom of the page
+{\Large \today}\\[1.5cm]
+\vfill
+
+% Author
+\Large
+서울대학교 공과대학\\
+컴 퓨 터 공 학 부\\
+고 우 종\\[1.0cm]
+{\Large 2012년 2월}
+\end{center}
+\end{titlepage}
+
+% Another cover
+\maketitle
+
+\begin{abstract}
+Your abstract goes here...
+\end{abstract}
+
+\tableofcontents
+
+\chapter{서론}
+최근 들어 매우 큰 규모의 군중이 등장하는 장면이 영화나 애니메이션, 비디오 게임
+등에 자주 등장하고 있다. 이러한 군중 장면들은 보통 등장 인물들끼리 협동 혹은
+적대하는 상호작용들 여러 개로 구성되어 있다. 예를 들면, 여러 명의 짐꾼이 같은
+물건을 동시에 들어서 옮기는 경우나 아니면 여러 명의 병사들이 서로 전투를 하고
+있는 장면을 들 수 있다. 이러한 상호 작용은 일종의 제약조건 (constraint)으로
+작용하는데, 왜냐하면 상호작용에 참가하는 각 캐릭터들은 해당 상호작용에 참여하는
+다른 캐릭터들과 상대적인 위치, 방향, 타이밍 면에서 잘 조정되어야 하기 때문이다.
+
+
+캐릭터들의 운동 경로 (motion path)를 매우 복잡하게 상호적으로 종속하게 만든다.
+왜냐하면, 상호작용이 어긋나지 않도록 유지하기 위해서는 각 캐릭터들의 매
+프레임이 위치나 방향, 타이밍 면에서 다른 프레임과 맞도록 매우 미세하게
+조정되어야 하기 때문이다.  더군다나, 이러한 거대한 군중 장면의 사용은 앞으로
+자동화된 생성 방식들이 새로 개발됨에 따라 더욱 널리 사용되어질 것으로 예상된다.
+따라서 이처럼 거대한 군중 장면을 상호작용들은 최대한 그대로 유지하면서
+실시간으로 편집하는 새로운 방법이 애니메이터들에게 필요하게 되었다.
+
+
+이 문제를 해결하기 위해, 본 논문에서는 문제를 처음부터 다시 재정의하고 새로운
+접근 방식을 도입했다. 기존의 방식 \cite{Kim:2009:SMM:1531326.1531385}을
+개선시키는 것은 기존 방식의 구조상 내재된 한계에 부딪혔다.  설명하자면, 이
+문제의 가장 근본적인 어려움은 바로 두 개의 요구사항, 즉 속도와 정확도가 서로
+상충하는, 역의 관계에 있다는 것이다. 우선, 앞서 언급한 이 제약조건들을 모두
+동시에 만족시키기 위해서는 매우 정확하고 총체적인 계산이 필요하다.  기존의
+방식들은 이 문제를 운동 경로의 모든 프레임들을 하나의 선형 시스템에 포함시킨 후
+이 시스템을 풂으로써 해결하였다. 하지만, 질적인 품질을 높이는 대신에 이 문제의
+계산 복잡도를 프레임의 총 개수에 의존하게 만듦으로써 확장 가능 (scalable)하지
+않도록 만들었다. 따라서 프레임의 총 개수가 증가함에 따라 기존의 방식은
+인터랙티브한 편집 속도를 달성하지 못하게 된다.
+
+이 한계를 극복하기 위해서, 본 저자는 계산 복잡도가 프레임의 총 개수가 아닌,
+고정된 개수의 제어점에만 의존하는 새로운 방법을 고안해냈다. 또한, 더 이상
+애니메이터가 대규모의 군중 장면을 운동 경로 하나하나씩 편집할 수 없으므로,
+조작용 핸들을 새로 정의하였다.
+
+
+결과적으로, 본 논문에서는 새로운 대규모의 군중 장면을 편집하는 기술을 제시한다.
+이 기술은 애니메이터들에게 원래의 상호작용은 최대한 보존하면서 운동 경로를
+자유자재로 편집할 수 있도록 한다.
+
+
+\chapter{관련 연구} \section{Mean-Value Coordinates} 본 논문에서는 무게중심좌표
+(barycentric coordinates)의 일반화 중 하나인 중간값 좌표 (Mean-Value
+Coordinates)를 사용하였다. 이 좌표는 조화함수를 위한 중간값 정리에서 착안하여
+만들어진 좌표로서, 다각형의 꼭지점들에 매겨진 값들로부터 중간값들을 보간하는데
+유용하다 \Floater.
+
+무게중심좌표는 볼록다각형에는 적용할 수 있으나, 볼록하지 않은 다각형에 대해서는
+일반적으로 적용할 수 없다.  반면에, 중간값 좌표는 모서리끼리 스스로 교차하지
+않는, 임의의 평면다각형에 대해서도 잘 정의된다 \Hormann. 운동 경로들을 정교하게
+덮기 위해서는 오목 껍데기 (concave hull)를 사용해야 하므로 중간값 좌표는 본
+논문에서 다루는 문제에 사용하기에 적합하다.
+
+%One generalization of barycentric coordinates we use is the Mean-Value
+%Coordinates (MVC). The coordinates are initially motivated by the Mean Value
+%Theorem for harmonic functions and useful for interpolating data that is given
+%at the vertices of the polygons \Floater.
+%
+%Although barycentric coordinates also can be extended to convex polygons, they
+%are usually unable to cover non-convex polygons. On the other hand, the
+%Mean-Value Coordinates are well-defined for arbitrary planar polygons without
+%self-intersections \Hormann. Thus, the coordinates are suitable to our setting
+%because we need to use a concave hull to overlap motion paths precisely.
+
+We explain the definition of the Mean-Value Coordinates briefly. Consider a
+point $x \in \mathbb{R}^2$ and the simple polygon $[v_0, v_1, ..., v_k, v_{k+1}
+= v_0]$ defined cyclically. Then, let $\alpha_i$ be the angle $\angle
+v_{i+1},x,v_{i}$ in the polygon.
+
+\begin{align}
+\lambda_i = \frac{w_i}{\sum_{j=1}^{k}w_j}, \quad w_i =
+2\frac{\tan(\alpha_{i-1}/2) + \tan(\alpha_{i}/2)}{\norm{x - v_i}}
+\end{align}
+
+The weights $(\lambda_0, ..., \lambda_k)$ are the Mean-Vale Coordinates for $x$
+with respect to $v_0, ...  , v_k$.
+
+\section{Green Coordinates}
+
+\chapter{개관}
+
+\chapter{결과}
+
+\chapter{결론}
+
+\printbibliography
+\end{document}
