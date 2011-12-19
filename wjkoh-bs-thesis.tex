@@ -1,5 +1,5 @@
+\documentclass[12pt,a4paper,oneside,final]{report}
 %\documentclass[12pt,a4paper,twoside,draft,openright]{report}
-\documentclass[12pt,a4paper,oneside,draft]{report}
 
 % Palatino
 \usepackage[T1]{fontenc}
@@ -14,10 +14,10 @@
 
 \usepackage{ifpdf}
 \ifpdf
-  \usepackage[unicode,pdftex,colorlinks]{hyperref}
+  \usepackage[unicode,pdftex,colorlinks=false]{hyperref}
   \input glyphtounicode\pdfgentounicode=1
 \else
-  \usepackage[unicode,dvipdfm,colorlinks]{hyperref}
+  \usepackage[unicode,dvipdfm,colorlinks=false]{hyperref}
 \fi
 % 한글 설정 끝
 
@@ -31,7 +31,7 @@
 
 % Bibliography
 \usepackage[autostyle=true]{csquotes}
-\usepackage[backend=biber,style=ieee,natbib=true,hyperref=true]{biblatex}
+\usepackage[backend=biber,style=ieee,natbib=true,hyperref=true,backref=true,doi=false]{biblatex}
 \addbibresource{wjkoh-bs-thesis.bib}
 \newcommand{\Kim}{\cite{Kim:2009:SMM:1531326.1531385}} 
 \newcommand{\KimKwon}{\cite{Kim:2009:SMM:1531326.1531385,Kwon:2008:GME:1360612.1360679}}
@@ -52,7 +52,7 @@
 \title{\thesistitle{}}
 \author{고우종\\
 서울대학교 컴퓨터공학부\\
-\url{wjngkoh@gmail.com}
+\href{mailto:wjngkoh@gmail.com}{\texttt{wjngkoh@gmail.com}}
 }
 \date{\today}
 %\keywords{Computer Graphics, Computer Animation,  Data-Driven Animation, Human Motion}
