@@ -1,0 +1,33 @@
+Windows 7 Enterprise K SP1 (64bit)
+
+Intel Core2 Quad 2.40GHz
+RAM 4.00GB
+
+# of motions : 6
+# of vertices: 3809
+Barycentric MeanValueCoords
+INIT BARYCENTRIC SOLVER !
+counter-clockWise!
+# of triangles: 110
+# of vertices of the mesh: 81
+
+LAPLACIAN_SOLVING_TIME Time= 1437 milliseconds
+BARY_SOLVING_TIME Time= 14 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1469 milliseconds
+BARY_SOLVING_TIME Time= 14 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1446 milliseconds
+BARY_SOLVING_TIME Time= 14 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1391 milliseconds
+BARY_SOLVING_TIME Time= 13 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1440 milliseconds
+BARY_SOLVING_TIME Time= 13 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1444 milliseconds
+BARY_SOLVING_TIME Time= 13 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1386 milliseconds
+BARY_SOLVING_TIME Time= 13 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1444 milliseconds
+BARY_SOLVING_TIME Time= 13 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1394 milliseconds
+BARY_SOLVING_TIME Time= 13 milliseconds
+LAPLACIAN_SOLVING_TIME Time= 1442 milliseconds
+BARY_SOLVING_TIME Time= 13 milliseconds
