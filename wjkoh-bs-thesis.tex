@@ -1,5 +1,6 @@
 \ifx \twoside \undefined 
-\documentclass[12pt,a4paper,oneside,final]{report}
+%\documentclass[12pt,a4paper,oneside,final]{report}
+\documentclass[11pt,a4paper,oneside,draft]{report}
 \else
 \documentclass[12pt,a4paper,twoside,final,openright]{report}
 \fi
@@ -26,8 +27,8 @@
 
 % Line spacing
 \usepackage{setspace}
-\doublespacing
-%\onehalfspacing
+%\doublespacing
+\onehalfspacing
 
 % Header
 \pagestyle{headings}
@@ -39,9 +40,12 @@
 \newcommand{\Kim}{\cite{Kim:2009:SMM:1531326.1531385}} 
 \newcommand{\KimKwon}{\cite{Kim:2009:SMM:1531326.1531385,Kwon:2008:GME:1360612.1360679}}
 \newcommand{\Igarashi}{\cite{Igarashi:2005:ASM:1073204.1073323}} 
+\newcommand{\IgarashiSorkine}{\cite{Igarashi:2005:ASM:1073204.1073323,Sorkine:2004:LSE:1057432.1057456}} 
 \newcommand{\Floater}{\cite{Floater200319}} 
 \newcommand{\Hormann}{\cite{Hormann:2006:MVC:1183287.1183295}}
 \newcommand{\Lipman}{\cite{Lipman:2008:GC:1360612.1360677}}
+\newcommand{\Sorkine}{\cite{Sorkine:2004:LSE:1057432.1057456}}
+\newcommand{\IgarashiImpl}{\cite{doi:10.1080/2151237X.2009.10129273}}
 
 % Math
 \usepackage{amsmath}
@@ -107,9 +111,9 @@
 %\cleardoublepage
 \fi
 
-\begin{abstract}
-Your abstract goes here...
-\end{abstract}
+%\begin{abstract}
+%작성중
+%\end{abstract}
 
 \tableofcontents
 
@@ -119,36 +123,37 @@ Your abstract goes here...
 \begin{figure}[htb]
 \centering
 %\includegraphics[width=0.8\textwidth]{image.png}
-\includegraphics[width=\linewidth]{motion_path_c.png}
+\includegraphics[width=0.9\linewidth]{motion_path_c.png}
 \caption{여러 운동 경로로 구성된 장면}
 \label{fig:motion_path}
 \end{figure}
 
 최근 들어 매우 큰 규모의 군중이 등장하는 장면이 영화나 애니메이션, 비디오 게임
-등에 자주 등장하고 있다. 이러한 군중 장면들은 그림~\ref{fig:motion_path}처럼
-보통 등장 인물들끼리 협동 혹은 적대하는, 여러 개의 상호작용들로 구성되어 있다.
-예를 들면, 여러 명의 짐꾼이 같은 물건을 동시에 들어서 옮기는 경우나 아니면 여러
-명의 병사들이 서로 전투를 하고 있는 장면을 들 수 있다. 이러한 상호 작용이 운동
-경로 (motion path)에 있어서는 일종의 제약조건 (constraint)으로 작용하는데, 그
-이유는 바로 상호작용에 참가하는 각 캐릭터들은 해당 상호작용에 참여하는 다른
-캐릭터들과 상대적인 위치, 방향, 타이밍 면에서 잘 조정되어야 하기 때문이다.  본
-논문의 목표는 이러한 복잡하게 서로 의존하는 운동 경로들을 상호작용들은
-유지하면서 실시간으로 편집하는 새로운 방법을 개발하는 것이다.
+등에 자주 등장하고 있다. 이러한 군중 장면들은 보통
+그림~\ref{fig:motion_path}처럼 등장인물들끼리 협동 혹은 적대하는, 여러 개의
+상호작용들로 구성되어 있다.  예를 들면 여러 명의 짐꾼이 같은 물건을 동시에
+들어서 옮기는 경우나 아니면 여러 명의 병사들이 서로 전투를 하고 있는 장면을 들
+수 있다. 이러한 상호작용이 운동 경로 (motion path)에 있어서는 일종의 제약조건
+(constraint)으로 작용하는데, 그 이유는 바로 상호작용에 참가하는 각 캐릭터들이
+해당 상호작용에 참여하는 다른 캐릭터들과 상대적인 위치, 방향, 타이밍 면에서 잘
+조정되어야 하기 때문이다.  본 논문의 목표는 이러한 복잡하게 서로 의존하는 운동
+경로들을 상호작용들은 최대한 유지하면서 사용자가 원하는 대로 실시간으로
+편집하는 새로운 방법을 개발하는 것이다.
 
-이 문제의 가장 근본적인 어려움은 바로 두 개의 요구사항, 즉 속도와 정확도가 서로
-상충하는, 역의 관계에 있다는 것이다. 우선, 앞서 언급한 이 제약조건들을 모두
-동시에 만족시키기 위해서는 운동 경로들을 편집시 매우 정확하고 총체적인 계산이
-필요하다.  기존의 방식들은~\KimKwon 이 문제를 운동 경로의 모든 프레임들을 하나의 선형
-시스템에 포함시킨 후 이 시스템을 풂으로써 해결하였다. 하지만 이는 질적인 품질을
-높이는 대신에 이 문제의 계산 복잡도를 프레임의 총 개수에 의존하게 만듦으로써
-확장 가능 (scalable)하지 않도록 만들었다. 따라서 프레임의 총 개수가 증가함에
-따라 기존의 방식은 인터랙티브한 편집 속도를 달성하지 못하게 된다.
+이 문제의 가장 근본적인 어려움은 바로 두 요구사항, 즉 속도와 정확도가 서로
+상충하는 역의 관계에 있다는 것이다. 우선, 앞서 언급한 이 제약조건들을 모두
+동시에 만족시키기 위해서는 운동 경로들을 편집 시 매우 정확하고 총체적인 계산이
+필요하다.  기존의 방식들은~\KimKwon~이 문제를 운동 경로의 모든 프레임들을
+하나의 선형 시스템에 포함시킨 후 이 시스템을 풂으로써 해결하였다. 하지만 이는
+질적인 품질을 높이는 대신에 이 문제의 계산 복잡도를 프레임의 총 개수에 의존하게
+만듦으로써 확장 가능 (scalable)하지 않게 하였다. 다시 말해 프레임의 총 개수가
+증가함에 따라 기존의 방식은 인터랙티브한 편집 속도를 달성하지 못하게 되었다.
 
 \begin{figure}[htb]
 \centering
 %\includegraphics[width=0.8\textwidth]{image.png}
-\includegraphics[width=\linewidth]{motion_path_w_mesh_c.png}
-\caption{그림~\ref{fig:motion_path}에 2차원 삼각형 메시를 씌운 모습 (Delaunay)}
+\includegraphics[width=0.9\linewidth]{motion_path_w_mesh_c.png}
+\caption{그림~\ref{fig:motion_path}에 2차원 삼각형 메시 (Delaunay)를 씌운 모습}
 \label{fig:motion_path_w_mesh}
 \end{figure}
  
@@ -158,14 +163,13 @@ Your abstract goes here...
 삼각형 메시 (mesh)처럼 같이 변형된다는 것에 착안했다.  따라서 본 논문에서는
 \emph{케이지 기반의 운동 경로 편집}을 이 문제의 해결책으로 제시한다. 간단히
 설명하면, 먼저 여러 운동 경로들이 모인 장면에서 경로들 위에 겹치도록 오목
-껍데기를 씌우고 이를 더 작은 삼각형들로 나눠서
-그림~\ref{fig:motion_path_w_mesh}처럼 삼각형 메시 (mesh)를 만든다. 그리고 운동
-경로의 모든 프레임의 일반화된 무게중심좌표, 예를 들면 중간값 좌표나 그린 좌표,
-를 이 삼각형 메시의 외곽 꼭지점들에 대하여 계산한다. 그러고 나서 이 케이지를
-가능한 한 잘 휘지 않게 (as-rigid-as-possible) 변형함으로써 그에 맞춰 변형된
-운동 경로들을 계산해낼 수 있다. 다시 말해, 변형된 프레임들의 좌표는 초기 중간값
-좌표 (가중치)와 변형된 후의 케이지의 외곽 꼭지점들의 좌표의 가중합 (weighted
-sum)이다.
+껍데기를 씌우고 이를 삼각형들로 나눠서 그림~\ref{fig:motion_path_w_mesh}처럼
+삼각형 메시를 만든다. 그리고 운동 경로의 모든 프레임의 일반화된 무게중심좌표,
+예를 들면 중간값 좌표나 그린 좌표, 를 이 삼각형 메시의 외곽 꼭지점들에 대하여
+계산한다. 그러고 나서 이 케이지를 가능한 한 잘 휘지 않게 (as-rigid-as-possible)
+변형함으로써 그에 맞춰 변형된 운동 경로들을 계산해낼 수 있다. 다시 말해 변형된
+프레임들의 좌표는 초기 중간값 좌표 (가중치)와 변형된 후의 케이지의 외곽
+꼭지점들 좌표의 가중합 (weighted sum)이다.
 
 %본 논문에서 본 저자가 기여한 바는, 먼저 최대한 덜 휘게 케이지 편집법과
 %중간값 좌표의 보간 (interpolation), 매끄러움 (smoothness), 그리고 선형
@@ -199,12 +203,14 @@ sum)이다.
 
 \chapter{관련 연구}
 
-기존의 방식~\Kim은 라플라시안 변형 (Laplacian deformation)을 사용하여 운동
-경로를 모든 제약조건들, 예를 들면 상호작용에 있어서 캐릭터의 위치, 방향, 타이밍
-등을 만족시키면서 사용자가 가하는 변형에 맞도록 부드럽게 변형했다. 본
-논문에서는 기존의 방법과 달리 케이지와 중간값 좌표~\Floater, 그리고 가능한 한
-잘 휘지않게 2차원 삼각형 메시 변형 (2D as-rigid-as-possible mesh editing)~\Igarashi을
-사용하여 구현하였다.
+기존의 방식~\Kim은 Laplacian curve editing~\Sorkine, 더 정확히 말하면
+Laplacian에 비율 조정 (scale adjustment)을 추가한 as-rigid-as-possible curve
+editing~\Igarashi을 응용하였다. 이를 이용해 운동 경로를 모든 제약조건들, 예를
+들면 사용자 정의 제약조건이나 상호작용에 있어서 캐릭터의 위치, 방향, 타이밍
+등을 만족시키면서 부드럽게 변형되도록 했다.  본 논문에서는 기존의 방법과 달리
+중간값 좌표~\Floater와 케이지를 도입하여, 운동 경로를 직접적으로 변형하지 않고
+대신 케이지를 as-rigid-as-possible mesh editing~\Igarashi을 사용하여 변형하도록
+하고 이로부터 중간값 좌표를 사용하여 운동 경로를 재구축하도록 하였다.
 
 \section{Mean Value Coordinates} 본 논문에서는 무게중심좌표
 (barycentric coordinates)의 일반화 중 하나인 중간값 좌표 (mean value
@@ -237,19 +243,20 @@ $\angle v_{i+1},x,v_{i}$라 하자.
 2차원에서 순수 등각사상 (pure conformal mapping)이므로 원래 운동 경로의 형태를
 중간값 좌표보다 더 잘 보존하는 특성을 가지고 있다~\Lipman.
 
-\chapter{케이지 기반의 운동 경로 변형}
+\chapter{케이지 기반의 운동 경로 편집}
 \section{개괄}
 먼저 대략적으로 케이지 기반의 편집을 설명하면 다음과 같이 서술할 수 있다.
 먼저, 운동 경로들을 덮는 최소한의 볼록 혹은 오목 껍데기를 만들고 이를
-삼각형으로 나누어서 2차원 삼각형 메시를 구성한다. 그리고 2D as-rigid-as-possible mesh
-editing~\Igarashi를 사용하여 이 2차원 삼각형 메시를 사용자가 원하는 대로 변형시킨다.
-이를 통해 사용자는 이 2차원 삼각형 메시의 어떤 꼭지점이라도 마음대로 움직이고 고정시킬
-수 있다. 그리고 이 변형된 2차원 삼각형 메시, 정확히는 삼각형 메시의 외곽 꼭지점들로부터 그에
-대응하여 변형된 운동 경로들을 계산해낼 수 있다.
+삼각형으로 나누어서 2차원 삼각형 메시를 구성한다. 그리고 as-rigid-as-possible
+triangle mesh editing~\Igarashi를 사용하여 이 삼각형 메시를 사용자가 원하는
+대로 변형시킨다.  이를 통해 사용자는 이 삼각형 메시의 어떤 꼭지점이라도
+마음대로 움직이고 고정시킬 수 있다. 그리고 이 변형된 삼각형 메시, 정확히는
+삼각형 메시의 외곽 꼭지점들로부터 그에 대응하여 변형된 운동 경로들을 계산해낼
+수 있다.
 
-조금 더 자세히 설명하면, 운동 경로들의 모든 프레임들을 이 2차원 삼각형 메시의 외곽
+조금 더 자세히 설명하면, 운동 경로들의 모든 프레임들을 이 삼각형 메시의 외곽
 꼭지점들과 그 꼭지점들에 대한 일종의 무게중심좌표, 중간값 좌표나 그린 좌표, 로
-표현할 수 있다. 따라서 케이지의 역할을 하는 이 2차원 삼각형 메시가 원래 형태를 최대한
+표현할 수 있다. 따라서 케이지의 역할을 하는 이 삼각형 메시가 원래 형태를 최대한
 유지하려고 노력하면서 변형된다면, 중간값 좌표의 보간 (interpolation), 매끄러움
 (smoothness), 그리고 선형 정확도 (linear precision) 성질 덕분에 중간값 좌표로
 표현된 내부의 운동 경로들 역시 부드럽게 변형된다. 새 방식은 기존의 방식과는
@@ -257,8 +264,56 @@ editing~\Igarashi를 사용하여 이 2차원 삼각형 메시를 사용자가 �
 계산을 완료할 수 있다.
 
 \section{알고리즘}
+앞서 언급했듯이 기존의 편집 방식~\Kim은 as-rigid-as-possible \emph{curve}
+editing~\Igarashi에 사용자 정의 제약조건을 추가하여 운동 경로에 적용함으로써
+원하는 결과를 얻어내었다.  본 논문 역시 비슷하게 as-rigid-as-possible
+\emph{triangle mesh} editing~\Igarashi에 사용자 정의 제약조건을 추가하고 이를
+운동 경로가 아닌 케이지에 적용한 후 변형된 케이지에서 중간값 좌표를 통해 다시
+운동 경로를 재구축함으로써 원하는 결과를 얻었다.
+
+이 사용자 정의 제약조건을 추가하는 방법에 대한 실마리는 이미 발표된 Takeo
+Igarashi의 후속 논문에서 발견할 수 있었다. 이 후속 논문의 5절, \emph{Allowing
+Handles on Arbitrary Positions in the
+Mesh}~\cite[p.26]{doi:10.1080/2151237X.2009.10129273} 에 기술된 대로 구현하면
+삼각형 메시의 꼭지점들뿐만 아니라 메시 안의 임의의 점들도 핸들로 잡고 고정시킬
+수 있다.  따라서 이를 이용하여 운동 경로의 제약조건 뿐만 아니라 사용자 정의
+제약조건, 즉 사용자가 메시의 꼭지점 뿐만아니라 임의의 점, 예를 들면 운동 경로의
+특정 프레임을 잡고 변형할 수도 있다.
+
+따라서 첫 번째 과정인 제약조건들을 만족시키면서 as-rigid-as-possible하게 삼각형
+메시를 마음대로 변형하는 과정은 상대적으로 수월하게 구현할 수 있었다. 그리고 두
+번째 과정인, 변형된 메시에서 변형된 운동 경로들을 재구축하는 것은 초기 중간값
+좌표와 변형된 메시의 외곽 꼭지점 좌표들의 단순한 선형 조합 (linear
+combination)이므로 벡터와 벡터의 곱으로 간단하게 구할 수 있었다.
 
 \chapter{결과}
+
+계산 소요시간 측정 실험에 사용된 환경은 다음과 같다. CPU는 Intel Core2 Quad
+2.40GHz에 RAM은 4.00GB인 테스트 환경에서 측정하였다. 운영체제는 Microsoft
+Windows 7 Enterprise (64-bit)를 사용하였고 실험 프로그램은 C++로 작성하여
+Microsoft Visual Studio 2010 Professional로 컴파일하였다.
+
+실험에 사용된 데이터는 그림~\ref{fig:motion_path}과
+그림~\ref{fig:before_deform}에서 볼 수 있는, 모션 캡처된 운동 경로 6개로 구성한
+하나의 장면이다. 모션 캡처 데이터는 16개의 카메라를 쓰는 Vicon 모션 캡처
+시스템을 사용하여 120 프레임/초의 속도로 캡처하였고 30 프레임/초로
+서브샘플링하였다.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|c}
+\hline
+항목 & 개수 \\
+\hline
+총 운동 경로 & 6 \\
+총 프레임 & 3809 \\
+메시의 삼각형 & 110 \\
+메시의 꼭지점 & 81 \\
+\hline
+\end{tabular}
+\caption{실험에 사용된 데이터}
+\label{table:data}
+\end{table}
 
 \begin{figure}[p]
 \centering
@@ -270,14 +325,17 @@ editing~\Igarashi를 사용하여 이 2차원 삼각형 메시를 사용자가 �
 \begin{figure}[p]
 \centering
 \includegraphics[width=0.9\linewidth]{after_deform_c.png}
-\caption{변형 후, (좌) 본 방법 (우) 기존 Laplacian editing}
+\caption{변형 후 (좌) 본 논문의 방법 (우) 기존 Laplacian editing}
 \label{fig:after_deform}
 \end{figure}
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{r*{2}{r}c}
- & 기존 방법 & 새로운 방법 & 속도 향상 \\
+\hline
+ & \multicolumn{2}{c}{계산 소요시간 (ms)} & \\
+\cline{2-3}
+회차 & 기존 방법 & 새로운 방법 & 속도 향상 (배) \\
 \hline
 1 & 1437 & 14 & 102.64 \\
 2 & 1469 & 14 & 104.93 \\
@@ -291,13 +349,17 @@ editing~\Igarashi를 사용하여 이 2차원 삼각형 메시를 사용자가 �
 10 & 1442 & 13 & 110.92 \\
 \hline
 평균 & 1429.3 & 13.3 & 107.55 \\
+\hline
 \end{tabular}
-  \caption{An example of table}
-  \label{my_table}
+\caption{계산 소요시간 측정 결과}
+\label{table:result}
 \end{table}
 
+측정해본 결과, 표~\ref{table:result}에서 볼 수 있듯이 기존 방식과 비교해 약
+107.55배의 속도 향상을 확인할 수 있었다.
+
 \chapter{결론}
-결과적으로, 이 해결법을 통해 계산 복잡도를 매우 큰폭으로 낮출 수 있었고 편집
+결과적으로 이 해결법을 통해 계산 복잡도를 매우 큰 폭으로 낮출 수 있었고 편집
 과정을 확장 가능 (scalable)하게 만들 수 있었다. 왜냐하면, 이 새로운 방식의 계산
 복잡도는 모든 프레임의 개수에 의존적이지 않고 케이지의 꼭지점의 개수에
 의존적이기 때문이다. 또한, 케이지라는 조작의 중간 매개체를 도입함으로써
@@ -305,7 +367,13 @@ editing~\Igarashi를 사용하여 이 2차원 삼각형 메시를 사용자가 �
 조작 핸들로서 제시하였다.
 
 %future work
-
+하지만 본 논문의 방법은 적은 변형 (small deformation)의 경우에는 상대적
+제약조건 (relative constraint), 즉 상호작용시 캐릭터 간의 거리, 방향 그리고
+타이밍 등이 잘 맞지만 큰 변형 (large deformation)에서는 어긋날 수 있다. 따라서
+차후 과제로는 상대적 제약조건을 확실하게 보장해주도록 하는 것이다. 다시 말해
+2차원 삼각형 메시 변형시 삼각형의 형태와 사용자 정의 제약조건만 최대한
+유지하도록 하는 것이 아니라 이 상대적 제약조건도 최대한 지키도록 수정하는 것이
+앞으로 남은 과제이다.
 
 \printbibliography
 \end{document}
